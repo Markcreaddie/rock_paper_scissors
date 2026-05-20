@@ -21,7 +21,6 @@ let computerScore = 0
 function playRound(humanChoice, computerChoice) {
     /*Winner declaration*/
     humanChoice = humanChoice.toLowerCase()
-    computerChoice = computerChoice.toLowerCase()
     const winningMoves = {
         rock: "scissors",
         paper: "rock",
@@ -36,5 +35,17 @@ function playRound(humanChoice, computerChoice) {
         return (`You lose! ${computerChoice} beats ${humanChoice}`)
     }
 }
-console.log(playRound("Scissors", "paper"))
-console.log(computerScore, humanScore)
+
+function playGame() {
+    humanScore = 0
+    computerScore = 0
+
+    for (let i = 0; i < 5; i++) {
+        const computerSelection = getComputerChoice()
+        const humanSelection = getHumanChoice()
+        playRound(humanSelection, computerSelection)
+    }
+    result = (humanScore > computerScore) ? `Congratulation, you won with a score of ${humanScore} : ${computerScore}` : `Sorry, you lost this time by ${computerScore}:${humanScore}`
+    return result
+}
+console.log(playGame())
