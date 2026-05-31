@@ -1,5 +1,3 @@
-console.log("Hello world")
-
 function getComputerChoice() {
     let options = ["rock", "paper", "scissors"]
     let makeChoice = (options) => {
@@ -10,13 +8,36 @@ function getComputerChoice() {
     return makeChoice(options)
 }
 
-function getHumanChoice() {
-    let choice = prompt("Select 'rock', 'paper' or 'scissors'")
-    return choice
-}
 
+let options = document.querySelector(".options")
 let humanScore = 0
 let computerScore = 0
+let dashboard = document.querySelector("#dashboard")
+let runningScore = document.createElement("p")
+let finalScore = document.createElement("p")
+
+dashboard.appendChild(runningScore)
+dashboard.appendChild(finalScore)
+
+options.addEventListener("click", (e) => {
+    humanChoice = e.target.textContent
+    computerChoice = getComputerChoice()
+    result = playRound(humanChoice, computerChoice)
+    runningScore.textContent = result
+
+    finalScore.textContent = ""
+
+    if (humanScore == 5 || computerScore == 5) {
+        finalScore.textContent =
+            (humanScore > computerScore) ?
+                `Congratulations! your won the game \nhuman ${humanScore}:${computerScore} computer ` :
+                `Better luck next time.You lost...\n
+        computer ${computerScore}:${humanScore} human`
+
+        humanScore = 0
+        computerScore = 0
+    }
+})
 
 function playRound(humanChoice, computerChoice) {
     /*Winner declaration*/
@@ -29,23 +50,13 @@ function playRound(humanChoice, computerChoice) {
     if (winningMoves[humanChoice] == computerChoice) {
         humanScore++
         return (`You win! ${humanChoice} beats ${computerChoice}`)
-
-    } else {
+    } else if (humanChoice == computerChoice) {
+        return (`It's a tie, you both picked ${humanChoice}`)
+    }
+    else {
         computerScore++
         return (`You lose! ${computerChoice} beats ${humanChoice}`)
     }
 }
 
-function playGame() {
-    humanScore = 0
-    computerScore = 0
 
-    for (let i = 0; i < 5; i++) {
-        const computerSelection = getComputerChoice()
-        const humanSelection = getHumanChoice()
-        playRound(humanSelection, computerSelection)
-    }
-    result = (humanScore > computerScore) ? `Congratulation, you won with a score of ${humanScore} : ${computerScore}` : `Sorry, you lost this time by ${computerScore}:${humanScore}`
-    return result
-}
-console.log(playGame())
